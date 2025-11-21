@@ -116,11 +116,11 @@ class REINFORCE:
         
         for episode in range(num_episodes):
             if render:
-                env = gym.make(self.env.spec.id, render_mode="human")
+                test_env = gym.make(self.env.spec.id, render_mode="human")
             else:
-                env = self.env
+                test_env = self.env
                 
-            state, _ = env.reset()
+            state, _ = test_env.reset()
             episode_reward = 0
             done = False
             
@@ -129,14 +129,14 @@ class REINFORCE:
                 with torch.no_grad():
                     probs = self.policy(state_tensor)
                 action = torch.argmax(probs, dim=-1).item()
-                state, reward, terminated, truncated, _ = env.step(action)
+                state, reward, terminated, truncated, _ = test_env.step(action)
                 done = terminated or truncated
                 episode_reward += reward
             
             test_rewards.append(episode_reward)
             
             if render:
-                env.close()
+                test_env.close()
         
         avg_reward = np.mean(test_rewards)
         print(f"\nTest Results over {num_episodes} episodes:")

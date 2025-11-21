@@ -2,6 +2,8 @@
 Simple example demonstrating REINFORCE on CartPole-v1
 """
 from reinforce import REINFORCE
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend for headless environments
 import matplotlib.pyplot as plt
 
 
